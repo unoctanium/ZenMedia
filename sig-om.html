@@ -7,16 +7,18 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
         .contact-table {
-            font-family: Arial, sans-serif;
             border-collapse: collapse;
             max-width: 500px;
+            margin: 0; /* Remove auto margin to left-align */
         }
         .logo-cell {
             width: 100px;
             vertical-align: top;
-            border-right: 1px solid #000000;
+            border-right: 1px solid #000;
             padding-right: 10px;
         }
         .info-cell {
@@ -24,7 +26,7 @@
             vertical-align: top;
             padding-left: 10px;
         }
-        .contact-info {
+        .contact-info, .company-details {
             font-size: 12px;
             margin: 0 0 5px 0;
         }
@@ -34,17 +36,18 @@
         }
         .company-details {
             font-size: 10px;
-            color: #555555;
-            margin: 0 0 3px 0;
+            color: #555;
         }
         .disclaimer {
             font-size: 8pt;
-            color: #555555;
+            color: #555;
             font-style: italic;
             margin-top: 10px;
+            text-align: left; /* Ensure disclaimer text is left-aligned */
         }
         .input-to-form {
             margin-bottom: 10pt;
+            width: 100%; /* Ensure it takes full width */
         }
         .input-to-form table {
             width: 100%;
@@ -60,10 +63,25 @@
         .input-to-form button {
             display: block;
             margin-bottom: 10pt;
+            padding: 5px 10px;
+            cursor: pointer;
         }
         .input-heading {
             font-weight: bold;
             margin-bottom: 10px;
+        }
+        #display-name {
+            font-size: 14px;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+        }
+        #display-title {
+            font-size: 12px;
+            color: #555;
+            margin: 0 0 10px 0;
+        }
+        #content-to-copy {
+            text-align: left; /* Ensure all content inside is left-aligned */
         }
     </style>
 </head>
@@ -88,18 +106,18 @@
                 <td><input type="text" id="phone" value="+49(170)9600065"></td>
             </tr>
         </table>
-        <button onclick="updateSignature()">Apply changes and copy to clipboard</button>
+        <button onclick="updateSignature()" aria-label="Apply changes and copy to clipboard">Apply changes and copy to clipboard</button>
     </div>
     
     <div id="content-to-copy">
         <table class="contact-table">
             <tr>
                 <td class="logo-cell">
-                    <img id="logo-img" src="https://unoctanium.github.io/ZenMedia/ZENBV_Logo_portrait_color.png" alt="Zen &ouml;BV" width="100" height="142">
+                    <img id="logo-img" src="https://unoctanium.github.io/ZenMedia/ZENBV_Logo_portrait_color.png" alt="Zen Beratung und Verwaltung UG Logo" width="100" height="142">
                 </td>
                 <td class="info-cell">
-                    <p id="display-name" style="font-size: 14px; font-weight: bold; margin: 0 0 5px 0;">Odo Maletzki</p>
-                    <p id="display-title" style="font-size: 12px; color: #555555; margin: 0 0 10px 0;">Senior Advisor</p>
+                    <p id="display-name">Odo Maletzki</p>
+                    <p id="display-title">Senior Advisor</p>
                     <p class="contact-info">
                         Phone: <a id="display-phone-link" href="tel:+491709600065"><span id="display-phone">+49(170)9600065</span></a>
                     </p>
@@ -109,32 +127,46 @@
                     <p class="contact-info">
                         Web: <a id="display-website" href="https://www.zenbv.de">www.zenbv.de</a>
                     </p>
-                    <p class="company-details">Zen Beratung und Verwaltung UG (haftungsbeschr&auml;nkt)</p>
-                    <p class="company-details">Bachemer Str. 233, 50935 K&ouml;ln, Deutschland</p>
-                    <p class="company-details">AG K&ouml;ln, HRB 92736, Ust-ID DE319673913</p>
+                    <p class="company-details">Zen Beratung und Verwaltung UG (haftungsbeschränkt)</p>
+                    <p class="company-details">Bachemer Str. 233, 50935 Köln, Deutschland</p>
+                    <p class="company-details">AG Köln, HRB 92736, Ust-ID DE319673913</p>
                     <p class="company-details">GF: Mitsou Maletzki-Kim</p>
                 </td>
             </tr>
         </table>
         <p class="disclaimer">
-            Der Inhalt dieser E-Mail ist vertraulich und nur f&uuml;r den in der Nachricht angegebenen Empf&auml;nger bestimmt. Es ist strengstens verboten, Teile dieser Nachricht ohne schriftliche Zustimmung des Absenders an Dritte weiterzugeben. Wenn Sie diese Nachricht versehentlich erhalten haben, antworten Sie bitte darauf, damit wir sicherstellen k&ouml;nnen, dass ein solcher Fehler in Zukunft nicht mehr vorkommt. Anschlie&szlig;end fahren Sie mit der L&ouml;schung der Nachricht fort.
+            Der Inhalt dieser E-Mail ist vertraulich und nur für den in der Nachricht angegebenen Empfänger bestimmt. Es ist strengstens verboten, Teile dieser Nachricht ohne schriftliche Zustimmung des Absenders an Dritte weiterzugeben. Wenn Sie diese Nachricht versehentlich erhalten haben, antworten Sie bitte darauf, damit wir sicherstellen können, dass ein solcher Fehler in Zukunft nicht mehr vorkommt. Anschließend fahren Sie mit der Löschung der Nachricht fort.
         </p>
     </div>
 
     <script>
     function updateSignature() {
-        document.getElementById("display-name").textContent = document.getElementById("name").value || "Odo Maletzki";
-        document.getElementById("display-title").textContent = document.getElementById("title").value || "Senior Advisor";
-        
-        let phoneValue = document.getElementById("phone").value || "+491709600065";
-        let cleanedPhoneValue = phoneValue.replace(/[^+\d]/g, "");
-        document.getElementById("display-phone-link").href = "tel:" + cleanedPhoneValue;
-        document.getElementById("display-phone").textContent = phoneValue;
-        
-        document.getElementById("display-email").href = "mailto:" + (document.getElementById("email").value || "om@zenbv.de");
-        document.getElementById("display-email").textContent = document.getElementById("email").value || "om@zenbv.de";
+        const name = document.getElementById("name").value || "Odo Maletzki";
+        const title = document.getElementById("title").value || "Senior Advisor";
+        const phone = document.getElementById("phone").value || "+49(170)9600065";
+        const email = document.getElementById("email").value || "om@zenbv.de";
+
+        document.getElementById("display-name").textContent = name;
+        document.getElementById("display-title").textContent = title;
+
+        const cleanedPhone = phone.replace(/[^+\d]/g, "");
+        document.getElementById("display-phone-link").href = `tel:${cleanedPhone}`;
+        document.getElementById("display-phone").textContent = phone;
+
+        document.getElementById("display-email").href = `mailto:${email}`;
+        document.getElementById("display-email").textContent = email;
+
+        // Copy the content of #content-to-copy to the clipboard
+        let content = document.getElementById("content-to-copy");
+        let range = document.createRange();
+        range.selectNode(content);
+        let selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        document.execCommand("copy");
+        selection.removeAllRanges();
+        alert("Signature copied to clipboard!");
     }
     </script>
 </body>
 </html>
-
